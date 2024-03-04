@@ -16,6 +16,7 @@ $stopWordRemoverFactory = new StopWordRemoverFactory();
 $stopword = $stopWordRemoverFactory->createStopWordRemover();
 
 
+
 // Weight Word
 $vectorizer = new TokenCountVectorizer(new WhitespaceTokenizer());
 
@@ -27,9 +28,19 @@ function processingText($text)
     $text = $stopword->remove($text);
     return $text;
 }
-/*
+
+
+function getVocabWords($text)
+{
+    global $vectorizer;
+    $vectorizer->fit($text);
+    $vectorizer->transform($text);
+    return $vectorizer->getVocabulary();
+}
 function weightedText($text)
 {
-
+    global $vectorizer;
+    $vectorizer->fit($text);
+    $vectorizer->transform($text);
+    return $text;
 }
-*/

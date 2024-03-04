@@ -42,7 +42,11 @@ require_once('processing.php')
       $textProcessing = processingText($name);
       
       $name_to_array = explode(" ", $textProcessing);
+      $weightText = weightedText($name_to_array);
+      $vocabText = getVocabWords($name_to_array);
       print("<pre>Result Preprocessing: " . print_r($name_to_array, true) . "</pre>");
+      print("<pre>Result VocabWords: " . print_r($vocabText, true) . "</pre>");
+      print("<pre>Result BagOfWords: " . print_r($weightText, true) . "</pre>");
     }
 
     ?>
