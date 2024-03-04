@@ -1,16 +1,9 @@
-<!doctype html>
-<html lang="en">
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-
-use Phpml\FeatureExtraction\TokenCountVectorizer;
-use Phpml\Tokenization\WhitespaceTokenizer;
-
-$vectorizer = new TokenCountVectorizer(new WhitespaceTokenizer());
-
-
+require_once('processing.php')
 ?>
 
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,28 +24,27 @@ $vectorizer = new TokenCountVectorizer(new WhitespaceTokenizer());
     <form action="a.php" method="get">
       <div class="input-group mb-3">
         <span class="input-group-text">Words</span>
-
         <input type="text" class="form-control" id="name" name="name"><br>
-        <input type="submit" class="btn btn-primary" value="Submit">
+        <input type="submit" class="btn btn-primary" value="Processing">
       </div>
     </form>
   </div>
   <div class="mt-5 mb-5 container">
     <?php
+
     // Check if form data was submitted
     if ($_SERVER["REQUEST_METHOD"] == "GET") {
       // Retrieve and sanitize the form data
       $name = isset($_GET['name']) ? htmlspecialchars($_GET['name']) : "";
-      $name_to_array = explode(" ", strtolower($name));
-      $vectorizer->fit($name_to_array);
-      $vectorizer->transform($name_to_array);
+    
+      print("<pre> You Input: " . print_r($name, true) . "</pre>");
 
-      // Display the submitted data
-      //  print_r($name);
-      print("<pre>" . print_r($vectorizer->getVocabulary(), true) . "</pre>");
-      print("<pre>" . print_r($name, true) . "</pre>");
-      print("<pre>" . print_r($name_to_array, true) . "</pre>");
+      $textProcessing = processingText($name);
+      
+      $name_to_array = explode(" ", $textProcessing);
+      print("<pre>Result Preprocessing: " . print_r($name_to_array, true) . "</pre>");
     }
+
     ?>
 
   </div>
